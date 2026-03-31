@@ -1,0 +1,59 @@
+<div class="hero-section text-center text-white d-flex align-items-center justify-content-center">
+    <div>
+        <h1 class="animate-text">{{ title }}</h1>
+        <p class="lead animate-fade">{{ subtitle }}</p>
+        <a href="#" class="btn btn-primary btn-lg animate-btn">Get Started</a>
+    </div>
+</div>
+
+<div class="container my-5">
+    <div class="row text-center">
+        @for (item of features; track item.title) {
+        <div class="col-md-4 mb-4 animate-card">
+            <div class="card shadow h-100">
+                <div class="card-body">
+                    <h5 class="card-title">{{ item.title }}</h5>
+                    <p class="card-text">{{ item.description }}</p>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+</div>
+
+<div class="container">
+    <h2 class="text-center">Explore Our Tech Stacks</h2>
+    <div class="row text-center mt-4">
+        @for (stack of techStacks; track stack.name) {
+        <div class="col-md-3 mb-4 animate-stack">
+            <div class="card shadow h-100">
+                <div class="card-body">
+                    <h5 class="card-title">{{ stack.name }}</h5>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+</div>
+
+<div class="container my-5">
+    <div class="row align-items-center">
+        <div class="col-md-6 animate-image">
+            <img src="https://images.pexels.com/photos/5428152/pexels-photo-5428152.jpeg" alt="Learning Image" class="img-fluid rounded shadow">
+        </div>
+        <div class="col-md-6 animate-content">
+            <h2>Why Choose Smart Certify?</h2>
+            <p>
+                At Smart Certify, we are committed to empowering learners with the skills and certifications they need
+                to succeed in today's competitive job market. Our platform offers a wide range of courses, expert
+                instructors, and a supportive community to help you achieve your career goals.
+            </p>
+            <ul>
+                <li>Comprehensive Course Catalog</li>
+                <li>Expert Instructors</li>
+                <li>Flexible Learning Options</li>
+                <li>Career Support and Resources</li>
+            </ul>
+            <a href="#" class="btn btn-secondary mt-3">Learn More</a>
+        </div>
+    </div>
