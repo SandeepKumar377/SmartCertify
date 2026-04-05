@@ -1,30 +1,42 @@
-using Microsoft.EntityFrameworkCore;
-using SmartCertify.Infrastructure.Data;
+using Microsoft.AspNetCore.Diagnostics;
+using SmartCertify.API.Extension;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
-builder.Services.AddDbContext<SmartCertifyDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
-    providerOptions => providerOptions.EnableRetryOnFailure()));
+builder.Services.AddExceptionHandler<GlobalExceptionHandlerMiddleware>();
+builder.Services.AddProblemDetails();
 
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddSwaggerExtension();
+builder.Services.AddDBContextExtension(builder.Configuration);
+builder.Services.AddCorsExtension(builder.Configuration);
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "SmartCertify.API v1");
+        c.RoutePrefix = string.Empty; // optional: makes Swagger UI load at root "/"
+    });
 }
 
 app.UseHttpsRedirection();
+app.UseRouting();
 
+//app.UseMiddleware<ExceptionHandlerMiddleware>();
+app.UseExceptionHandler();
+
+app.UseCors();
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-
 app.Run();
